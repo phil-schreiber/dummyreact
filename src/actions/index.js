@@ -1,4 +1,4 @@
-import { getPosts,getUsers, getComments } from '../helpers/apiClient'
+import { getPosts,getUsers, getComments, postComment } from '../helpers/apiClient'
 
 export const POSTS_REQUEST_SUCCEEDED = 'POSTS_REQUEST_SUCCEEDED'
 export const POSTS_REQUEST_FAILED = 'POSTS_REQUEST_FAILED'
@@ -15,6 +15,10 @@ export const USERS_POSTS_SUCCEEDED = 'USERS_POSTS_SUCCEEDED'
 export const COMMENTS_REQUEST_SUCCEEDED = 'COMMENTS_REQUEST_SUCCEEDED'
 export const COMMENTS_REQUEST_FAILED = 'COMMENTS_REQUEST_FAILED'
 export const COMMENTS_REQUEST_IN_PROGRESS = 'COMMENTS_REQUEST_IN_PROGRESS'
+
+export const COMMENTS_POST_REQUEST_FAILED = 'COMMENTS_POST_REQUEST_FAILED'
+export const COMMENTS_POST_REQUEST_IN_PROGRESS = 'COMMENTS_POST_REQUEST_IN_PROGRESS'
+export const COMMENTS_POST_REQUEST_SUCCEEDED = 'COMMENTS_POST_REQUEST_SUCCEEDED'
 
 
 export const requestPosts = () => (dispatch) => {
@@ -159,8 +163,6 @@ export const requestComments = () => (dispatch) => {
                 reject(dispatch(requestCommentsFailed(error)))
             })
     })
-
-
 }
 
 export const requestCommentsInProgress = {
@@ -183,4 +185,36 @@ export const requestCommentsFailed = error => {
     }
 }
 
+export const postRequestComments = (data) => (dispatch,data) => {
 
+    dispatch(postRequestCommentsInProgress)
+    return new Promise((resolve, reject) => {
+        postComment()
+            .then((response) => {
+                resolve(dispatch(postRequestCommentsSucceeded(response)))
+            })
+            .catch((error) => {
+                reject(dispatch(postRequestCommentsFailed(error)))
+            })
+    })
+}
+
+export const postRequestCommentsInProgress = {
+    type: COMMENTS_POST_REQUEST_IN_PROGRESS
+}
+
+export const postRequestCommentsSucceeded = comments => {
+    return {
+        type: COMMENTS_POST_REQUEST_SUCCEEDED,
+        payload: {
+            comments
+        }
+    }
+}
+
+export const postRequestCommentsFailed = error => {
+    return {
+        type: COMMENTS_POST_REQUEST_FAILED,
+        error
+    }
+}

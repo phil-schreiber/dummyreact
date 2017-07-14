@@ -1,7 +1,10 @@
 import {
     COMMENTS_REQUEST_SUCCEEDED,
     COMMENTS_REQUEST_FAILED,
-    COMMENTS_REQUEST_IN_PROGRESS
+    COMMENTS_REQUEST_IN_PROGRESS,
+    COMMENTS_POST_REQUEST_IN_PROGRESS,
+    COMMENTS_POST_REQUEST_SUCCEEDED,
+    COMMENTS_POST_REQUEST_FAILED
 
 } from '../actions'
 
@@ -32,7 +35,6 @@ export default (state = initialState, action) => {
                 hasError:false,
                 error:{},
                 requestInProgress:false
-
             }
             break;
         case COMMENTS_REQUEST_IN_PROGRESS:
@@ -43,7 +45,31 @@ export default (state = initialState, action) => {
                 error:action.error
             }
             break;
-
+        case COMMENTS_POST_REQUEST_SUCCEEDED:
+            return{
+                ...state,
+                hasError: false,
+                requestInProgress: false,
+                error:{},
+                comments: action.payload.comments
+            }
+            break;
+        case COMMENTS_POST_REQUEST_FAILED:
+            return{
+                ...state,
+                hasError:false,
+                error:{},
+                requestInProgress:false
+            }
+            break;
+        case COMMENTS_POST_REQUEST_IN_PROGRESS:
+            return{
+                ...state,
+                hasError: true,
+                requestInProgress: false,
+                error:action.error
+            }
+            break;
         default: return state;
     }
 }

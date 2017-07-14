@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
+
+import CommentModal from './CommentModal'
+
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Paper from 'material-ui/Paper';
+
 
 const paperStyles = {
     height: 'auto',
@@ -25,7 +29,7 @@ console.log(post);
                     {post.body}
                 </CardText>
                 <CardActions>
-                    <FloatingActionButton disabled={false} onClick={
+                    <FloatingActionButton title="Back to overview" disabled={false} onClick={
                         () => {
                             onSelectUser(null)
                             onSelectPost(null)
@@ -49,9 +53,9 @@ console.log(post);
                                 </Card>
                             </Paper>
                         )
-
                     })}
                 </div>
+                <CommentModal/>
             </div>
         )
     }

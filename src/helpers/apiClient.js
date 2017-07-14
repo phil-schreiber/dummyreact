@@ -73,3 +73,6 @@ export function fetchIt (url, options = {}) {
 export const getPosts = () => fetchIt('https://jsonplaceholder.typicode.com/posts');
 export const getUsers = () => fetchIt('https://jsonplaceholder.typicode.com/users');
 export const getComments = () => fetchIt('https://jsonplaceholder.typicode.com/comments');
+export const postComment = (data) => {
+    fetchIt(postOptions(data))
+}
